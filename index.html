@@ -1,49 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Vue Dev Exercise</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
 </head>
 <body>
-<div id="app">
-    <div class="w-full h-screen flex items-center justify-center">
-        <div class="grid gap-4 grid-cols-3">
-            <div v-for="(value,key) in values" 
-                 @click="play(key)"
-                 class="border w-48 h-48 flex items-center justify-center text-4xl hover:bg-gray-100 cursor-pointer">
-                {{ value }}
+
+    <div id="game-view">
+        <div id="game-view-info">
+            {{ infoMessage }}
+        </div>
+        <div id="game-view-squares">
+            <div 
+            v-for="(square, i) in squares"
+            v-on:click="activeGame.makeMove(i)"
+            v-bind:class="{ highlighted: square.isHighLighted}"
+            class="game-view-square" id="game-view-square">
+
+            {{ square.value }}
+
             </div>
         </div>
+        <div id="game-view-buttons">
+            <button v-on:click="playAgain">Iniciar juego</button>
+            <button v-on:click="playAgainAI">Iniciar juego IA</button>
+        </div>
     </div>
-</div>
-<script>
-    var app = new Vue({
-        el: '#app',
-        data: () => ({
-            values: {
-                1: '',
-                2: '',
-                3: '',
-                4: '',
-                5: '',
-                6: '',
-                7: '',
-                8: '',
-                9: '',
-            },
-            current: 'X'
-        }),
-        methods:{
-            play(key){
-                if(! this.values[key]) {
-                    this.values[key] = this.current
-                    this.current  = (this.current === 'X' ? 'O' : 'X')
+
+    <script src="https://cdn.jsdelivr.net/npm/vue" charset="utf-8"></script>
+    
+    <script src="./js/Square.js"></script>
+    <script src="./js/Game.js"></script>
+    <script src="./js/GameAI.js"></script>
+
+    <script type="text/javascript">
+
+        let activeGame = new Game();
+    
+        let gameVue = new Vue({
+            el: '#game-view',
+            data: activeGame,
+            computed: {
+                infoMessage: function() {
+                    if( this.inProgress){
+                        return 'It is ' + this.currentTurn + '\'s turn!';
+                    }
+                    if (this.winner) {
+                        return this.winner + ' wins!';
+                    }
+                    if(!this.winner && !this.inProgress){
+                        return 'It was a draw!';
+                    }
                 }
+            },
+            methods: {
+                playAgain: function(){
+                    this.inProgress = true;
+                    this.winner = null; // 'O' or 'X' 
+                    this.currentTurn = Game.O; // 'O' or 'X' 
+                    this.movesMade = 0;
+                    this.squares = new Array(9).fill().map(s => new Square());
+                },
+                playAgainAI: function(){
+                    this.inProgressAI = true;
+                    this.winnerAI = null; // 'O' or 'X' 
+                    this.currentTurnAI = Game.O; // 'O' or 'X' 
+                    this.movesMadeAI = 0;
+                    this.squaresAI = new Array(9).fill().map(s => new Square());
+                }
+        
             }
-        }
-    })
-</script>
+                
+        });
+
+    </script>
+
 </body>
 </html>
