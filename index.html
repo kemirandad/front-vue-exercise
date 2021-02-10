@@ -62,20 +62,10 @@
                 playAgain: function(){
                     this.inProgress = true;
                     this.winner = null; // 'O' or 'X' 
-                    this.currentTurn = Game.O; // 'O' or 'X' 
                     this.movesMade = 0;
                     this.squares = new Array(9).fill().map(s => new Square());
                     this.history = [];
-                },
-                playAgainAI: function(){
-                    this.inProgressAI = true;
-                    this.winnerAI = null; // 'O' or 'X' 
-                    this.currentTurnAI = Game.O; // 'O' or 'X' 
-                    this.movesMadeAI = 0;
-                    this.squaresAI = new Array(9).fill().map(s => new Square());
-                },
-                playSound: function(){
-                    myTrack.play()
+                    this.gameWithAI = false;
                 }
             }
                 

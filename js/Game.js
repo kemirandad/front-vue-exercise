@@ -8,16 +8,35 @@ class Game{
         this.squares = new Array(9).fill().map(s => new Square());
         this.history = [];
         this.myTrack = new Audio ('../assets/click.mp3');
+        this.gameWithAI = false;
     }
 
     makeMove(i){
-        if( this.inProgress && !this.squares[i].value){
+        if( this.inProgress && !this.squares[i].value && this.gameWithAI == false){
             this.squares[i].value = this.currentTurn;
 
             this.history.push(i)
             this.movesMade++;
             this.checkForWinner();
             this.currentTurn = (this.currentTurn === Game.O) ? Game.X : Game.O;
+
+        }else{
+            this.currentTurn = Game.O;
+            this.squares[i].value = this.currentTurn;
+            this.history.push(i)
+            this.movesMade++;
+            this.checkForWinner();
+
+            for (let index = 0; index < this.squares.length; index++) {
+                if (this.squares[index].value === null) {
+                    this.currentTurn = Game.Ai;
+                    this.checkForWinner();
+                    this.squares[index].value = this.currentTurn;
+                    this.movesMade++;
+                    this.history.push(index)
+                    break
+                }
+            }
 
         }
     }
@@ -68,13 +87,19 @@ class Game{
         }
     }
     playAgainAI(){
-        do{
-            
-        }while(this.inProgress)
+        this.inProgress = true;
+        this.winner = null; // 'O' or 'X' 
+        this.currentTurn = Game.O; // 'O' or 'X' 
+        this.empty = Game.undo;
+        this.movesMade = 0;
+        this.squares = new Array(9).fill().map(s => new Square());
+        this.history = [];
+        this.myTrack = new Audio ('../assets/click.mp3');
+        this.gameWithAI = true;
     }
 }
 
 Game.O = 'O';
 Game.X = 'X';
-Game.Ai= 'AI'
+Game.Ai= 'A'
 Game.undo = null;
