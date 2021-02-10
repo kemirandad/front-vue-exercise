@@ -7,6 +7,7 @@ class Game{
         this.movesMade = 0;
         this.squares = new Array(9).fill().map(s => new Square());
         this.history = [];
+        this.myTrack = new Audio ('../assets/click.mp3');
     }
 
     makeMove(i){
@@ -20,6 +21,11 @@ class Game{
 
         }
     }
+
+    playSound(){
+        this.myTrack.play();
+    }
+    
     undoMovement(){
         if( this.history.length > 0){
             this.squares[this.history[this.history.length - 1]].value = this.empty;
@@ -61,8 +67,14 @@ class Game{
 
         }
     }
+    playAgainAI(){
+        do{
+            
+        }while(this.inProgress)
+    }
 }
 
 Game.O = 'O';
 Game.X = 'X';
+Game.Ai= 'AI'
 Game.undo = null;
