@@ -3,18 +3,29 @@ class Game{
         this.inProgress = true;
         this.winner = null; // 'O' or 'X' 
         this.currentTurn = Game.O; // 'O' or 'X' 
+        this.empty = Game.undo;
         this.movesMade = 0;
         this.squares = new Array(9).fill().map(s => new Square());
+        this.history = [];
     }
 
     makeMove(i){
         if( this.inProgress && !this.squares[i].value){
             this.squares[i].value = this.currentTurn;
 
+            this.history.push(i)
             this.movesMade++;
             this.checkForWinner();
             this.currentTurn = (this.currentTurn === Game.O) ? Game.X : Game.O;
 
+        }
+    }
+    undoMovement(){
+        if( this.history.length > 0){
+            this.squares[this.history[this.history.length - 1]].value = this.empty;
+            this.movesMade--;
+            this.history.pop();
+            this.currentTurn = (this.currentTurn === Game.O) ? Game.X : Game.O;
         }
     }
 
@@ -44,7 +55,7 @@ class Game{
 
         });
 
-        // chech for tie
+        // check for tie
         if(this.movesMade === this.squares.length){
             this.inProgress = false; //inProgress =  false AND winner = null
 
@@ -54,3 +65,4 @@ class Game{
 
 Game.O = 'O';
 Game.X = 'X';
+Game.undo = null;

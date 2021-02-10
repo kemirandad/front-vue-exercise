@@ -26,6 +26,7 @@
         <div id="game-view-buttons">
             <button v-on:click="playAgain">Iniciar juego</button>
             <button v-on:click="playAgainAI">Iniciar juego IA</button>
+            <button v-on:click="activeGame.undoMovement()">Deshacer</button>
         </div>
     </div>
 
@@ -62,6 +63,7 @@
                     this.currentTurn = Game.O; // 'O' or 'X' 
                     this.movesMade = 0;
                     this.squares = new Array(9).fill().map(s => new Square());
+                    this.history = [];
                 },
                 playAgainAI: function(){
                     this.inProgressAI = true;
@@ -69,6 +71,13 @@
                     this.currentTurnAI = Game.O; // 'O' or 'X' 
                     this.movesMadeAI = 0;
                     this.squaresAI = new Array(9).fill().map(s => new Square());
+                },
+                undo: function(){
+                    if( this.history.length > 0){
+                        this.squares[this.history[-1]].value = Game.undo;
+                        this.movesMade--;
+                        this.squares.pop();
+                    }
                 }
         
             }
