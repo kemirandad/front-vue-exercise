@@ -64,7 +64,7 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(250,250,250,1) 0%, rg
     font-size: 75px;
     text-transform: uppercase;
 
-    border-radius: px;
+    border-radius: 0;
     cursor: pointer;
     user-select: none;
     -moz-user-select: none;

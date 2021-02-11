@@ -48,13 +48,13 @@
             computed: {
                 infoMessage: function() {
                     if( this.inProgress){
-                        return 'It is ' + this.currentTurn + '\'s turn!';
+                        return 'Turno de  ' + this.currentTurn + '\' !';
                     }
                     if (this.winner) {
-                        return this.winner + ' wins!';
+                        return this.winner + ' gana!';
                     }
                     if(!this.winner && !this.inProgress){
-                        return 'It was a draw!';
+                        return 'Esto es un empate!';
                     }
                 }
             },
