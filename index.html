@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="game-view-buttons">
-            <button v-on:click="playAgain">Iniciar juego</button>
+            <button v-on:click="activeGame.playAgain()">Iniciar juego</button>
             <button v-on:click="activeGame.playAgainAI()">Iniciar juego IA</button>
             <button v-on:click="activeGame.undoMovement()">Deshacer</button>
         </div>
@@ -61,6 +61,7 @@
             methods: {
                 playAgain: function(){
                     this.inProgress = true;
+                    this.currentTurn = Game.O; // 'O' or 'X' 
                     this.winner = null; // 'O' or 'X' 
                     this.movesMade = 0;
                     this.squares = new Array(9).fill().map(s => new Square());

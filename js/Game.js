@@ -10,7 +10,7 @@ class Game{
         this.myTrack = new Audio ('../assets/click.mp3');
         this.gameWithAI = false;
     }
-
+    
     makeMove(i){
         if( this.inProgress && !this.squares[i].value && this.gameWithAI == false){
             this.squares[i].value = this.currentTurn;
@@ -20,7 +20,7 @@ class Game{
             this.checkForWinner();
             this.currentTurn = (this.currentTurn === Game.O) ? Game.X : Game.O;
 
-        }else{
+        }else if(this.inProgress && !this.squares[i].value && this.gameWithAI == true){
             this.currentTurn = Game.O;
             this.squares[i].value = this.currentTurn;
             this.history.push(i)
@@ -42,11 +42,13 @@ class Game{
     }
 
     playSound(){
-        this.myTrack.play();
+        if (this.inProgress === true) {
+            this.myTrack.play();
+        }
     }
     
     undoMovement(){
-        if( this.history.length > 0){
+        if( this.history.length > 0 && this.inProgress === true){
             this.squares[this.history[this.history.length - 1]].value = this.empty;
             this.movesMade--;
             this.history.pop();
@@ -83,7 +85,6 @@ class Game{
         // check for tie
         if(this.movesMade === this.squares.length){
             this.inProgress = false; //inProgress =  false AND winner = null
-
         }
     }
     playAgainAI(){
@@ -96,6 +97,15 @@ class Game{
         this.history = [];
         this.myTrack = new Audio ('../assets/click.mp3');
         this.gameWithAI = true;
+    }
+    playAgain(){
+        this.inProgress = true;
+        this.currentTurn = Game.O; // 'O' or 'X' 
+        this.winner = null; // 'O' or 'X' 
+        this.movesMade = 0;
+        this.squares = new Array(9).fill().map(s => new Square());
+        this.history = [];
+        this.gameWithAI = false;
     }
 }
 
