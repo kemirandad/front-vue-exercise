@@ -15,7 +15,7 @@
         <div id="game-view-squares">
             <div 
             v-for="(square, i) in squares"
-            v-on:click="activeGame.makeMove(i); activeGame.playSound()"
+            v-on:click="activeGame.makeMove(i)"
             v-bind:class="{ highlighted: square.isHighLighted}"
             class="game-view-square" id="game-view-square">
 

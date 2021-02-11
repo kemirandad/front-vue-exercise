@@ -95,7 +95,6 @@ class Game{
         this.movesMade = 0;
         this.squares = new Array(9).fill().map(s => new Square());
         this.history = [];
-        this.myTrack = new Audio ('../assets/click.mp3');
         this.gameWithAI = true;
     }
     playAgain(){
